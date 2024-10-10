@@ -15,33 +15,33 @@ def most_active(bio_data):
     activePeriod = False
     largestConcurrentAuthors = 0
 
-    # This list will hold the 
-    data = []
+    currentData = 0
+    pastData = 0
     for i in range(1900,2000):
         # reset activeAuthors for every itteration
         activeAuthors = 0
-        # k variable is to help index the data list
-        k = i - 1900
         for j in range(len(bio_data)):
             # if the author is within the year (i) add to the total activeAuthors
             if i >= bio_data[j][1] and i <= bio_data[j][2]:
                 activeAuthors += 1
-        # append data list after going through bio_data list
-        data.append(activeAuthors)
+        # update currentData
+        currentData = activeAuthors
 
-        # k > 0 avoids index out of range errors 
-        if k > 0:
-            # set the start year if the value for current year is greater than the value for last year
-            # and this year's activeAuthors is greater than the recorded largestConcurrentAuthors
-            if data[k] > data[k-1] and activeAuthors > largestConcurrentAuthors:
-                startYear = i
-                largestConcurrentAuthors = activeAuthors
-                activePeriod = True
-            # set the end year if the value for the current year is less than the value for the previous year
-            # and we are in an activePeriod
-            if data[k] < data[k-1] and activePeriod:
-                endYear = i - 1
-                activePeriod = False
+        
+        # set startYear if the value for currentData is greater than the value for pastData
+        # and this year's activeAuthors is greater than the recorded largestConcurrentAuthors
+        if currentData > pastData and activeAuthors > largestConcurrentAuthors:
+            startYear = i
+            largestConcurrentAuthors = activeAuthors
+            activePeriod = True
+        # set endYear if the value for the currentData is less than the value for pastData
+        # and we are in an activePeriod
+        if currentData < pastData and activePeriod:
+            endYear = i - 1
+            activePeriod = False
+
+        # update pastData for net itteration
+        pastData = currentData
     # return the tuple
     return (startYear,endYear)
 
