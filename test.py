@@ -1,7 +1,9 @@
-def vowelReplace(testString):
+def vowel_replace(phrase: str) -> str:
   """
-  input: String
-  ouput: String
+  Args:
+    phrase: str
+  Returns:
+    str
 
   Approach:
   Create a temp string variable
@@ -15,7 +17,7 @@ def vowelReplace(testString):
   # create a list of vowels
   vowels = ['a','e','i','o','u','y']
   # go through each character in the testString
-  for character in testString:
+  for character in phrase:
     # if the lowercase character is found in the vowels list, add "*" to the return string
     if character.lower() in vowels:
       temp += "*"
@@ -26,5 +28,9 @@ def vowelReplace(testString):
   return temp
 
 # Test cases
-print(vowelReplace("Ivan"))
-print(vowelReplace("Becca"))
+print(vowel_replace("Ivan")) # *v*n
+print(vowel_replace("Becca")) # B*cc*
+print(vowel_replace("")) # (empty)
+print(vowel_replace(" ")) # (empty)
+print(vowel_replace("aeiouy")) # ******
+print(vowel_replace("qwertyuiopasdfghjklzxcvbnm")) # qw*rt****p*sdfghjklzxcvbnm

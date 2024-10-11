@@ -1,4 +1,4 @@
-import math
+from math import floor
 """
 As a visual aid, here is a matrix:
 0,0  1,0  2,0  3,0  4,0  5,0  6,0  7,0  8,0  9,0  
@@ -13,46 +13,48 @@ As a visual aid, here is a matrix:
 0,9  1,9  2,9  3,9  4,9  5,9  6,9  7,9  8,9  9,9
 """
 
-def spiral(matrix_size):
+def spiral(matrix_size: int) -> None:
     """
-    Spiral coordinates of a matrix of `matrix_size` size.
-    Input: integer
-    Output: void (simple print statement)
+    Given the size of a matrix, output the coordinates of a spiral pattern
+    Args:
+        matrix_size: int
+    Returns:
+        None (print statement)
     """
     x = -1
     y = 0
-    xDirection = 1
-    yDirection = 1
+    x_direction = 1
+    y_direction = 1
     # total runs depending on the matrix size
     runs = matrix_size * 2 - 1
     # initial distance is always the matrix size
     distance = matrix_size
-    for i in range(1,runs+1):
-        tempDistance = math.floor(distance)
-        for _ in range(tempDistance):
+    for run in range(1, runs + 1):
+        floor_distance = floor(distance)
+        for _ in range(floor_distance):
             # if the runs are odd, change the x value
-            if i % 2 == 1:
-                x += xDirection
+            if run % 2 == 1:
+                x += x_direction
             # if the runs are even, change the y value
             else:
-                y += yDirection
+                y += y_direction
             # print the results
-            print(x, y)
+            print(f"({x}, {y})")
 
         # changing the distance by -0.5 allows for the desired ditances when using math.floor(distance)
         # ex: matrix_size = 2 we want the distances to be 2, 1, 1
         distance -= .5
         # if run is odd, change sign of x
-        if i % 2 == 1:
-            xDirection *= -1
+        if run % 2 == 1:
+            x_direction *= -1
         # if run is even, change sign of y
         else:
-            yDirection *= -1
+            y_direction *= -1
     
 
 # Change matrix_size for testing
-matrixSize = 3
-spiral(matrixSize)
+matrix_size = 3
+spiral(matrix_size)
 
 # (method)  # (runs)-> (distances per run)
 # spiral(1) # 1     -> 1

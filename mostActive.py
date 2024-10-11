@@ -1,49 +1,46 @@
-def most_active(bio_data):
+def most_active(bio_data: list[tuple[str, int, int]]) -> tuple[int, int]:
     """
     Find window of time when most authors were active.
-
-    One really direct approach is to go through every year (from 1900 to 1999) and see how many active people there were, 
-    then find the largest number and see which consecutive years had that number
-    """
-    """
-    Input: List of Tuples
-    Output: Tuple
+    Args:
+        bio_data: list[tuple[str, int, int]]
+    Returns:
+        tuple[int, int]
     """
 
-    startYear = 0
-    endYear = 0
-    activePeriod = False
-    largestConcurrentAuthors = 0
+    start_year = 0
+    end_year = 0
+    active_period = False
+    largest_concurrent_authors = 0
 
-    currentData = 0
-    pastData = 0
-    for i in range(1900,2000):
-        # reset activeAuthors for every itteration
-        activeAuthors = 0
-        for j in range(len(bio_data)):
-            # if the author is within the year (i) add to the total activeAuthors
-            if i >= bio_data[j][1] and i <= bio_data[j][2]:
-                activeAuthors += 1
-        # update currentData
-        currentData = activeAuthors
+    current_data = 0
+    past_data = 0
+    for year in range(1900,2000):
+        # reset active_authors for every itteration
+        active_authors = 0
+        for author in bio_data:
+            # if the author is within the year add to the total active_authors
+            if author[1] <= year <= author[2]:
+                active_authors += 1
+        # update current_data
+        current_data = active_authors
 
         
-        # set startYear if the value for currentData is greater than the value for pastData
-        # and this year's activeAuthors is greater than the recorded largestConcurrentAuthors
-        if currentData > pastData and activeAuthors > largestConcurrentAuthors:
-            startYear = i
-            largestConcurrentAuthors = activeAuthors
-            activePeriod = True
-        # set endYear if the value for the currentData is less than the value for pastData
-        # and we are in an activePeriod
-        if currentData < pastData and activePeriod:
-            endYear = i - 1
-            activePeriod = False
+        # set start_year if the value for current_data is greater than the value for past_data
+        # and this year's active_authors is greater than the recorded largest_concurrent_authors
+        if current_data > past_data and active_authors > largest_concurrent_authors:
+            start_year = year
+            largest_concurrent_authors = active_authors
+            active_period = True
+        # set end_year if the value for the current_data is less than the value for past_data
+        # and we are in an active_period
+        if current_data < past_data and active_period:
+            end_year = year - 1
+            active_period = False
 
-        # update pastData for net itteration
-        pastData = currentData
+        # update past_data for net itteration
+        past_data = current_data
     # return the tuple
-    return (startYear,endYear)
+    return (start_year,end_year)
 
 # Test the code
 data = [
